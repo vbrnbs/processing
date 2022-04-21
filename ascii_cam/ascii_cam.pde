@@ -5,7 +5,8 @@ import controlP5.*;
 ControlP5 cp5;
 Capture video;
 PImage image;
-boolean over = false;
+boolean ascii = false;
+boolean glitch = false;
 
 void setup() {
   size(2560, 1080);
@@ -40,21 +41,26 @@ void draw() {
     
     
     PImage master = video;
-    if (over) {
+    if (ascii) {
       master = asciiImage;
     }
-    else {
-      // master = video;
-    }
+    else if (glitch){
+      master = glitchImage;
+    } else {}
     image(master, 0, 0);
     // println(mouseX, mouseY)
-    println(over);
+    println(ascii + " , " + glitch);
     // int intensity = (int) map(mouseX, 0, width, 0, 4);
     // image(Glitch.apply(asciiImage, 7), 0, 0);
 }
 
 void setVideoActive() {
-  if (mouseX > 1940 && mouseX < 2540 && mouseY > 0 && mouseY < 337) {
-    over = true;
+  if (mousePressed && (mouseX > 1940 && mouseX < 2540 && mouseY > 0 && mouseY < 337)) {
+    ascii = true;
+    glitch = false;
+  }
+  else if (mousePressed && (mouseX > 1940 && mouseX < 2540 && mouseY > 337 && mouseY < 684)) {
+    glitch = true;
+    ascii = false;
   }
 }
